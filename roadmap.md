@@ -385,18 +385,44 @@ users: Dict[str, int] = {
 
 # ARQUIVOS
 
-Escrevendo arquivo:
 ```python
-with open("file.txt", "w") as file:
-    file.write("Olá mundo")
-```
+import json
 
-Lendo arquivo:
-```python
-with open("file.txt", "r") as file:
-    content = file.read()
+# Write JSON file
+def write_file() -> None:
+    users = [
+        {
+            "name": "Bruno",
+            "age": 29
+        },
+        {
+            "name": "Goku",
+            "age": 40
+        },
+        {
+            "name": "Mel",
+            "age": 54
+        }
+    ]
 
-    print(content)
+    # W -> Write
+    with open("users.json", "w") as file:
+        json.dump(users, file)
+
+# Read JSON file and convert from Dict
+def read_file() -> dict:
+    users: dict
+
+    # R -> Read
+    with open("users.json", "r") as file:
+        users = json.load(file)
+
+    return users
+
+# write_file()
+users: dict = read_file()
+
+print(users)    
 ```
 
 ---
@@ -406,19 +432,23 @@ with open("file.txt", "r") as file:
 ```python
 import json
 
-user = {
+user_string: str = '{"name": "Jonas", "age": 20}'
+user: dict = {
     "name": "Bruno",
     "age": 29
 }
 
-json_string = json.dumps(user)
+# Convert Dict from JSON
+json_string: str = json.dumps(user)
 
-print(json_string)
-```
+# Convert JSON from Dict
+json_dict: dict = json.loads(user_string)
 
-Convertendo JSON para dict:
-```python
-data = json.loads(json_string)
+print("JSON String: ", json_string) # '{"name": "Bruno", "age": 29}'
+print("JSON Dict: ", json_dict["name"]) # Jonas
+
+print(type(json_string)) # <class 'str'>
+print(type(json_dict)) # <class 'dict'>
 ```
 
 ---

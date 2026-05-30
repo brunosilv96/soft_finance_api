@@ -1,3 +1,22 @@
+# Virtual Environment
 .venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest
+.pytest_cache/
+
+# MyPy
 .mypy_cache/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Environment Variables
 .env
