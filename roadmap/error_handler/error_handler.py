@@ -1,10 +1,12 @@
 from ...exceptions.zero_division_exception import ZeroDivisionException
 
+
 def divide(a: int, b: int) -> float:
     if b == 0:
         raise ZeroDivisionException()
-    
+
     return a / b
+
 
 try:
     # result = divide(10, 2)

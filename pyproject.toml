@@ -1,2 +1,26 @@
 [tool.fastapi]
 entrypoint = "src.app.main:app"
+[tool.black]
+line-length = 88
+target-version = ["py311"]
+required-version = "26"
+include = '\.pyi?$'
+
+# Formatting behavior
+skip-string-normalization = false
+skip-magic-trailing-comma = false
+preview = false
+unstable = false
+
+# File collection
+extend-exclude = '''
+(
+  ^/foo.py
+  | .*_pb2.py
+)
+'''
+force-exclude = '''
+(
+  ^/generated/
+)
+'''
