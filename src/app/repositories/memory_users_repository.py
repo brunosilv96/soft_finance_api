@@ -1,7 +1,8 @@
+from src.app.repositories.user_repository import UserRepository
 from src.app.models.user_model import UserModel
 
 
-class MemoryUsersRepository:
+class MemoryUsersRepository(UserRepository):
     def __init__(self):
         self.users: list[UserModel] = []
 

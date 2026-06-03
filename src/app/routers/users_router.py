@@ -1,19 +1,12 @@
-from fastapi import APIRouter, Depends, status
-from src.app.repositories.memory_users_repository import MemoryUsersRepository
-from src.app.controllers.users_controller import UsersController
-from src.app.schemas.users.user import (
+from fastapi import APIRouter, status
+from src.app.dependencies import UserControllerDep
+from src.app.schemas.user_schema import (
     UserRequestSchema,
     UserResponseSchema,
     UserUpdateRequestSchema,
 )
 
 router = APIRouter(prefix="/users", tags=["Usuários"])
-
-_memory_users_repository = MemoryUsersRepository()
-
-
-def define_user_controller() -> UsersController:
-    return UsersController(user_repository=_memory_users_repository)
 
 
 @router.post(
@@ -26,7 +19,7 @@ def define_user_controller() -> UsersController:
 )
 async def create(
     payload: UserRequestSchema,
-    controller: UsersController = Depends(define_user_controller),
+    controller: UserControllerDep,
 ) -> UserResponseSchema:
     return controller.create(payload)
 
@@ -39,7 +32,7 @@ async def create(
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
 )
-async def all(controller: UsersController = Depends(define_user_controller)):
+async def all(controller: UserControllerDep) -> list[UserResponseSchema]:
     return controller.load_all()
 
 
@@ -51,9 +44,7 @@ async def all(controller: UsersController = Depends(define_user_controller)):
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
 )
-async def find_by_id(
-    id: str, controller: UsersController = Depends(define_user_controller)
-):
+async def find_by_id(id: str, controller: UserControllerDep) -> UserResponseSchema:
     return controller.find_by_id(id=id)
 
 
@@ -63,9 +54,7 @@ async def find_by_id(
     description="Excluí o usuário com o ID corresponde informado",
     status_code=status.HTTP_204_NO_CONTENT,
 )
-async def find_by_id(
-    id: str, controller: UsersController = Depends(define_user_controller)
-):
+async def delete(id: str, controller: UserControllerDep) -> None:
     return controller.delete(id=id)
 
 
@@ -77,9 +66,9 @@ async def find_by_id(
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
 )
-async def find_by_id(
+async def update(
     id: str,
     payload: UserUpdateRequestSchema,
-    controller: UsersController = Depends(define_user_controller),
-):
+    controller: UserControllerDep,
+) -> UserResponseSchema:
     return controller.update(id=id, payload=payload)

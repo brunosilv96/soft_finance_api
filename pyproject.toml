@@ -2,7 +2,7 @@
 entrypoint = "src.app.main:app"
 [tool.black]
 line-length = 88
-target-version = ["py311"]
+target-version = ["py313"]
 required-version = "26"
 include = '\.pyi?$'
 
