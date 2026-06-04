@@ -25,3 +25,9 @@ async def invalid_payload_error_handler(
             "message": exc.message,
         },
     )
+
+
+handlers = {
+    NotFoundError: not_found_error_handler,
+    InvalidPayloadError: invalid_payload_error_handler,
+}
