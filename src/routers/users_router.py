@@ -1,6 +1,7 @@
 from fastapi import APIRouter, status
-from src.app.dependencies import UserControllerDep
-from src.app.schemas.user_schema import (
+from src.dependencies import UserControllerDep
+from src.models.user_model import UserModel
+from src.schemas.user_schema import (
     UserRequestSchema,
     UserResponseSchema,
     UserUpdateRequestSchema,
@@ -20,8 +21,9 @@ router = APIRouter(prefix="/users", tags=["Usuários"])
 async def create(
     payload: UserRequestSchema,
     controller: UserControllerDep,
-) -> UserResponseSchema:
-    return controller.create(payload)
+) -> UserModel:
+    new_user: UserModel = controller.create(payload)
+    return new_user
 
 
 @router.get(
@@ -32,8 +34,9 @@ async def create(
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
 )
-async def all(controller: UserControllerDep) -> list[UserResponseSchema]:
-    return controller.load_all()
+async def all(controller: UserControllerDep) -> list[UserModel]:
+    users: list[UserModel] = controller.load_all()
+    return users
 
 
 @router.get(
@@ -44,8 +47,9 @@ async def all(controller: UserControllerDep) -> list[UserResponseSchema]:
     status_code=status.HTTP_200_OK,
     response_model_exclude_none=True,
 )
-async def find_by_id(id: str, controller: UserControllerDep) -> UserResponseSchema:
-    return controller.find_by_id(id=id)
+async def find_by_id(id: str, controller: UserControllerDep) -> UserModel:
+    user: UserModel = controller.find_by_id(id=id)
+    return user
 
 
 @router.delete(
@@ -55,7 +59,8 @@ async def find_by_id(id: str, controller: UserControllerDep) -> UserResponseSche
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete(id: str, controller: UserControllerDep) -> None:
-    return controller.delete(id=id)
+    controller.delete(id=id)
+    return
 
 
 @router.patch(
@@ -70,5 +75,6 @@ async def update(
     id: str,
     payload: UserUpdateRequestSchema,
     controller: UserControllerDep,
-) -> UserResponseSchema:
-    return controller.update(id=id, payload=payload)
+) -> UserModel:
+    updated_user: UserModel = controller.update(id=id, payload=payload)
+    return updated_user

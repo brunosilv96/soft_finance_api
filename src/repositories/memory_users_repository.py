@@ -1,9 +1,9 @@
-from src.app.repositories.user_repository import UserRepository
-from src.app.models.user_model import UserModel
+from src.repositories.user_repository import UserRepository
+from src.models.user_model import UserModel
 
 
 class MemoryUsersRepository(UserRepository):
-    def __init__(self):
+    def __init__(self) -> None:
         self.users: list[UserModel] = []
 
     def save(self, user: UserModel) -> UserModel:

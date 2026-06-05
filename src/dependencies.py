@@ -2,9 +2,9 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from src.app.controllers.users_controller import UsersController
-from src.app.repositories.memory_users_repository import MemoryUsersRepository
-from src.app.repositories.user_repository import UserRepository
+from src.controllers.users_controller import UsersController
+from src.repositories.memory_users_repository import MemoryUsersRepository
+from src.repositories.user_repository import UserRepository
 
 _memory_repo = MemoryUsersRepository()
 

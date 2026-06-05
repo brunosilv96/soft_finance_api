@@ -1,8 +1,11 @@
-from fastapi import Request, status
+from typing import Any, Callable, Coroutine
+
+from fastapi import Request, Response, status
+from fastapi.datastructures import State
 from fastapi.responses import JSONResponse
 
-from src.app.errors.invalid_payload_error import InvalidPayloadError
-from src.app.errors.not_found_error import NotFoundError
+from src.errors.invalid_payload_error import InvalidPayloadError
+from src.errors.not_found_error import NotFoundError
 
 
 async def not_found_error_handler(request: Request, exc: NotFoundError) -> JSONResponse:
@@ -27,7 +30,10 @@ async def invalid_payload_error_handler(
     )
 
 
-handlers = {
+handlers: dict[
+    int | type[Exception],
+    Callable[[Request[State], Any], Coroutine[Any, Any, Response]],
+] = {
     NotFoundError: not_found_error_handler,
     InvalidPayloadError: invalid_payload_error_handler,
 }

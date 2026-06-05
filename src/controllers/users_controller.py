@@ -1,22 +1,21 @@
 from datetime import datetime
 import uuid
 
-from src.app.repositories.user_repository import UserRepository
-from src.app.models.user_model import UserModel
-from src.app.schemas.user_schema import (
+from src.repositories.user_repository import UserRepository
+from src.models.user_model import UserModel
+from src.schemas.user_schema import (
     UserRequestSchema,
-    UserResponseSchema,
     UserUpdateRequestSchema,
 )
-from src.app.errors.invalid_payload_error import InvalidPayloadError
-from src.app.errors.not_found_error import NotFoundError
+from src.errors.invalid_payload_error import InvalidPayloadError
+from src.errors.not_found_error import NotFoundError
 
 
 class UsersController:
     def __init__(self, user_repository: UserRepository) -> None:
         self.users_repository = user_repository
 
-    def create(self, payload: UserRequestSchema) -> UserResponseSchema:
+    def create(self, payload: UserRequestSchema) -> UserModel:
         user_model = UserModel(
             id=str(uuid.uuid4()),
             name=payload.name,
@@ -24,12 +23,14 @@ class UsersController:
             created_at=datetime.now(),
         )
 
-        return self.users_repository.save(user_model)
+        new_user: UserModel = self.users_repository.save(user_model)
 
-    def load_all(self) -> list[UserResponseSchema]:
+        return new_user
+
+    def load_all(self) -> list[UserModel]:
         return self.users_repository.find_all()
 
-    def find_by_id(self, id: str) -> UserResponseSchema:
+    def find_by_id(self, id: str) -> UserModel:
         if id == "" or id.strip() == "":
             raise InvalidPayloadError(message="ID is required")
 
@@ -51,7 +52,7 @@ class UsersController:
 
         return self.users_repository.delete(user)
 
-    def update(self, id: str, payload: UserUpdateRequestSchema) -> UserResponseSchema:
+    def update(self, id: str, payload: UserUpdateRequestSchema) -> UserModel:
         if id == "" or id.strip() == "":
             raise InvalidPayloadError(message="ID is required")
 

@@ -2,12 +2,6 @@
 
 ## INICIANDO NOVO PROJETO EM PYTHON
 
-Crie uma pasta para o projeto:
-```bash
-mkdir meu_projeto
-cd meu_projeto
-```
-
 Crie um ambiente virtual:
 ```bash
 python -m venv .venv
@@ -223,11 +217,6 @@ users = {
 print(users["Bruno"])
 ```
 
-Criando dict vazio:
-```python
-users = {}
-```
-
 Verificando existência:
 ```python
 if "Bruno" in users:
@@ -257,24 +246,6 @@ Desestruturação:
 x, y = coordinates
 ```
 
----
-
-# SETS
-
-Coleção sem elementos duplicados.
-
-```python
-numbers = {1, 2, 3, 3}
-
-print(numbers)
-```
-
-Adicionar item:
-```python
-numbers.add(4)
-```
-
----
 
 # LIST COMPREHENSION
 
@@ -364,21 +335,6 @@ class User:
 user = User("Bruno", 29)
 
 print(user)
-```
-
----
-
-# TIPAGEM
-
-```python
-from typing import List, Dict
-
-
-names: List[str] = ["Bruno", "José"]
-
-users: Dict[str, int] = {
-    "Bruno": 29
-}
 ```
 
 ---

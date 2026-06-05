@@ -1,5 +1,5 @@
 [tool.fastapi]
-entrypoint = "src.app.main:app"
+entrypoint = "src.app:app"
 [tool.black]
 line-length = 88
 target-version = ["py313"]
