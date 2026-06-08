@@ -10,5 +10,8 @@
         "**/__pycache__": true,
         "**/*.pytest_cache": true,
     },
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "cSpell.words": [
+        "Bruniele"
+    ]
 }

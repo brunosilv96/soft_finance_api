@@ -20,6 +20,8 @@
 ### Cliente App
 - Visualizar produtos, estoque e preço
 - Contato sobre produtos via WPP
+- Compartilhar link do serviço
+- Avaliar serviço prestado
 
 ### BackOffice Web
 - Gerenciamento de produtos

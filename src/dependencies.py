@@ -2,21 +2,21 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from src.controllers.users_controller import UsersController
-from src.repositories.memory_users_repository import MemoryUsersRepository
-from src.repositories.user_repository import UserRepository
+from src.controllers.customers_controller import CustomersController
+from src.repositories.memory_customer_repository import MemoryCustomerRepository
+from src.repositories.customer_repository import CustomerRepository
 
-_memory_repo = MemoryUsersRepository()
+_memory_repo = MemoryCustomerRepository()
 
 
-def get_user_repository() -> UserRepository:
+def get_user_repository() -> CustomerRepository:
     return _memory_repo
 
 
-def get_user_controller(
-    repository: Annotated[UserRepository, Depends(get_user_repository)],
-) -> UsersController:
-    return UsersController(user_repository=repository)
+def get_customer_controller(
+    repository: Annotated[CustomerRepository, Depends(get_user_repository)],
+) -> CustomersController:
+    return CustomersController(user_repository=repository)
 
 
-UserControllerDep = Annotated[UsersController, Depends(get_user_controller)]
+CustomerControllerDep = Annotated[CustomersController, Depends(get_customer_controller)]

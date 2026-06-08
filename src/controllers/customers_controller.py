@@ -1,43 +1,43 @@
 from datetime import datetime
 import uuid
 
-from src.repositories.user_repository import UserRepository
-from src.models.user_model import UserModel
-from src.schemas.user_schema import (
-    UserRequestSchema,
-    UserUpdateRequestSchema,
+from src.repositories.customer_repository import CustomerRepository
+from src.models.customer_model import CustomerModel
+from src.schemas.customer_schema import (
+    CustomerRequestSchema,
+    CustomerUpdateRequestSchema,
 )
 from src.errors.invalid_payload_error import InvalidPayloadError
 from src.errors.not_found_error import NotFoundError
 
 
-class UsersController:
-    def __init__(self, user_repository: UserRepository) -> None:
+class CustomersController:
+    def __init__(self, user_repository: CustomerRepository) -> None:
         self.users_repository = user_repository
 
-    def create(self, payload: UserRequestSchema) -> UserModel:
-        user_model = UserModel(
+    def create(self, payload: CustomerRequestSchema) -> CustomerModel:
+        user_model = CustomerModel(
             id=str(uuid.uuid4()),
             name=payload.name,
             email=payload.email,
             created_at=datetime.now(),
         )
 
-        new_user: UserModel = self.users_repository.save(user_model)
+        new_user: CustomerModel = self.users_repository.save(user_model)
 
         return new_user
 
-    def load_all(self) -> list[UserModel]:
+    def load_all(self) -> list[CustomerModel]:
         return self.users_repository.find_all()
 
-    def find_by_id(self, id: str) -> UserModel:
+    def find_by_id(self, id: str) -> CustomerModel:
         if id == "" or id.strip() == "":
             raise InvalidPayloadError(message="ID is required")
 
-        user: UserModel | None = self.users_repository.find_by_id(id=id)
+        user: CustomerModel | None = self.users_repository.find_by_id(id=id)
 
         if not user:
-            raise NotFoundError(message="User not found")
+            raise NotFoundError(message="Customer not found")
 
         return user
 
@@ -45,21 +45,21 @@ class UsersController:
         if id == "" or id.strip() == "":
             raise InvalidPayloadError(message="ID is required")
 
-        user: UserModel | None = self.users_repository.find_by_id(id=id)
+        user: CustomerModel | None = self.users_repository.find_by_id(id=id)
 
         if not user:
-            raise NotFoundError(message="User not found")
+            raise NotFoundError(message="Customer not found")
 
         return self.users_repository.delete(user)
 
-    def update(self, id: str, payload: UserUpdateRequestSchema) -> UserModel:
+    def update(self, id: str, payload: CustomerUpdateRequestSchema) -> CustomerModel:
         if id == "" or id.strip() == "":
             raise InvalidPayloadError(message="ID is required")
 
-        user: UserModel | None = self.users_repository.find_by_id(id=id)
+        user: CustomerModel | None = self.users_repository.find_by_id(id=id)
 
         if not user:
-            raise NotFoundError(message="User not found")
+            raise NotFoundError(message="Customer not found")
 
         # Exclude null fields
         updated_date = payload.model_dump(exclude_unset=True)

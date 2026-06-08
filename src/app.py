@@ -3,8 +3,8 @@ from src.errors import error_handlers
 from src.routers import v1_router
 
 app = FastAPI(
-    title="Soft Finance",
-    description="Gerenciador de finanças fácil e confiável",
+    title="Bruniele Silva Estética API",
+    description="Gerenciamento de Agenda e Produtos Facilitado",
     version="1.0.0",
     exception_handlers=error_handlers.handlers,
 )

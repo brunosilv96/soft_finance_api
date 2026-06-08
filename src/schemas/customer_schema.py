@@ -3,17 +3,17 @@ from datetime import datetime
 from pydantic import BaseModel, EmailStr, Field
 
 
-class UserRequestSchema(BaseModel):
+class CustomerRequestSchema(BaseModel):
     name: str = Field(..., min_length=2, max_length=50)
     email: EmailStr
 
 
-class UserUpdateRequestSchema(BaseModel):
+class CustomerUpdateRequestSchema(BaseModel):
     name: str | None = Field(None, min_length=2, max_length=50)
     email: EmailStr | None = None
 
 
-class UserResponseSchema(BaseModel):
+class CustomerResponseSchema(BaseModel):
     id: str
     name: str
     email: EmailStr

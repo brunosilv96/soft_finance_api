@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 @dataclass
-class UserModel:
+class CustomerModel:
     id: str
     name: str
     email: str
