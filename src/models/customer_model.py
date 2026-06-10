@@ -1,11 +1,11 @@
-from dataclasses import dataclass
 from datetime import datetime
 
+from sqlmodel import Field, SQLModel
 
-@dataclass
-class CustomerModel:
-    id: str
+
+class CustomerModel(SQLModel, table=True):
+    id: str | None = Field(default=None, primary_key=True)
     name: str
-    email: str
+    email: str = Field(index=True)
     created_at: datetime
     updated_at: datetime | None = None
